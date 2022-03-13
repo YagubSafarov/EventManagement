@@ -12,6 +12,11 @@
 
         private void OnEnable()
         {
+            Reinit();
+        }
+
+        private void Reinit()
+        {
             _options = EventsDatabase.Load().events;
             _eventsProperty = serializedObject.FindProperty("_event");
             _index = ArrayUtility.IndexOf(_options, _eventsProperty.stringValue);
@@ -30,6 +35,7 @@
             if (GUILayout.Button("Update event list"))
             {
                 EventsDatabase.Scan();
+                Reinit();
             }
         }
     }
