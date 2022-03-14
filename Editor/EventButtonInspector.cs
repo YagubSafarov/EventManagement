@@ -3,40 +3,24 @@
     using UnityEditor;
     using UnityEngine;
 
-    [CustomEditor(typeof(EventButton))]
+    [CustomEditor(typeof(EventButton), true)]
     public class EventButtonInspector : Editor
     {
-        private int _index;
-        private string[] _options;
-        private SerializedProperty _eventsProperty;
+        private EventListHandler _eventListHandler;
 
         private void OnEnable()
         {
-            Reinit();
+            _eventListHandler = EvenManagementEditorHelper.CreateHandler(serializedObject, "_event");
         }
 
-        private void Reinit()
+        private void OnDisable()
         {
-            _options = EventsDatabase.Load().events;
-            _eventsProperty = serializedObject.FindProperty("_event");
-            _index = ArrayUtility.IndexOf(_options, _eventsProperty.stringValue);
+            _eventListHandler = null;
         }
 
         public override void OnInspectorGUI()
         {
-            EditorGUI.BeginChangeCheck();
-            _index = EditorGUILayout.Popup(_index, _options);
-            if (EditorGUI.EndChangeCheck())
-            {
-                _eventsProperty.stringValue = _options[_index];
-                serializedObject.ApplyModifiedProperties();
-            }
-
-            if (GUILayout.Button("Update event list"))
-            {
-                EventsDatabase.Scan();
-                Reinit();
-            }
+            EvenManagementEditorHelper.Draw(_eventListHandler);
         }
     }
 }

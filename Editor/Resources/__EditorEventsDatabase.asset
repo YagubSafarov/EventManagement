@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: __EditorEventsDatabase
   m_EditorClassIdentifier: 
   events:
-  - aaaaasd
-  - bbb/asd
-  - bbb/rea
+  - event
+  - event11
+  - root/event 1
+  - root/event 2
