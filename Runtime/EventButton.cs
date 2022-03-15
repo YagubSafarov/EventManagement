@@ -8,7 +8,7 @@
     {
         private Button _button;
         [SerializeField]
-        private string _event;
+        protected string _event;
 
         private void Awake()
         {
