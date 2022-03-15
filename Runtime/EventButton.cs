@@ -1,28 +1,29 @@
-﻿using EventManagement;
-using UnityEngine;
-using UnityEngine.UI;
-
-[RequireComponent(typeof(Button))]
-public class EventButton : MonoBehaviour
+﻿namespace EventManagement
 {
-    private Button _button;
-    [SerializeField]
-    private string _event;
+    using UnityEngine;
+    using UnityEngine.UI;
 
-    private void Awake()
+    [RequireComponent(typeof(Button))]
+    public class EventButton : MonoBehaviour
     {
-        _button = GetComponent<Button>();
-        _button.onClick.AddListener(OnButtonClicked);
-    }
+        private Button _button;
+        [SerializeField]
+        private string _event;
 
-    private void OnDestroy()
-    {
-        _button.onClick.RemoveListener(OnButtonClicked);
-    }
+        private void Awake()
+        {
+            _button = GetComponent<Button>();
+            _button.onClick.AddListener(OnButtonClicked);
+        }
 
-    private void OnButtonClicked()
-    {
-        EventHandler.ExecuteEvent(_event);
-    }
+        private void OnDestroy()
+        {
+            _button.onClick.RemoveListener(OnButtonClicked);
+        }
 
+        protected virtual void OnButtonClicked()
+        {
+            EventHandler.ExecuteEvent(_event);
+        }
+    }
 }
